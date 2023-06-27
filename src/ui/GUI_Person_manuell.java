@@ -71,7 +71,7 @@ public final class GUI_Person_manuell extends JFrame implements ActionListener {
             gbc.gridy++;
             this.mainPanel.add(new JTextField(person.getVorname()),gbc);
             this.mainPanel.add(new JTextField(person.getName()),gbc);
-            this.mainPanel.add(new JTextField(person.getId()),gbc);
+            this.mainPanel.add(new JTextField(String.valueOf(person.getId())),gbc);
             
             String irgendwasIst = "Es ist nichts!";            
            
@@ -91,14 +91,19 @@ public final class GUI_Person_manuell extends JFrame implements ActionListener {
     
     public void addPersonAction() {
         System.out.println("Hinzufügen");
-        Person testPerson = new Person("Person","Vorname",24,false);
+        Person testPerson = new Person("Person","Vorname",24,true);
         this.personen.add(testPerson);
         this.initUI();
     }
     
     public void removePersonAction() {
         System.out.println("Entfernen");
-        this.personen.remove(this.personen.size()-1);
+        try {
+            this.personen.remove(this.personen.size()-1);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Das Array ist bereits leer.");
+        }
+
         this.initUI();
     }
 
