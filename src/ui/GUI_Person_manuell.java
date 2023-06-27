@@ -62,11 +62,19 @@ public final class GUI_Person_manuell extends JFrame implements ActionListener {
         this.mainPanel.removeAll();
         gbc.gridy = 0;
         gbc.weighty = 0;
-        gbc.gridwidth = 2;
         this.mainPanel.add(this.addButton,gbc);
         this.mainPanel.add(this.removeButton,gbc);
-        
-        gbc.gridwidth = 1;
+
+        // Überschriften
+        gbc.gridy = 1;
+        gbc.insets = new Insets(10,0,0,0);
+        this.mainPanel.add(new JLabel("Vorname"),gbc);
+        this.mainPanel.add(new JLabel("Nachname"),gbc);
+        this.mainPanel.add(new JLabel("Person-ID"),gbc);
+        this.mainPanel.add(new JLabel("ist etwas?"),gbc);
+
+        gbc.insets = new Insets(0,0,0,0);
+
         for(Person person : this.personen) {
             gbc.gridy++;
             this.mainPanel.add(new JTextField(person.getVorname()),gbc);
