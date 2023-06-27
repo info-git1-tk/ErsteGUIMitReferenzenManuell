@@ -18,13 +18,10 @@ import javax.swing.*;
  * @author wagnerbe
  */
 public final class GUI_Person_manuell extends JFrame implements ActionListener {
-    
-    private final GridBagLayout layout = new GridBagLayout();
+
     private final GridBagConstraints gbc = new GridBagConstraints();
-    
     private final JPanel mainPanel = new JPanel();
-    
-    private ArrayList<Person> personen = new ArrayList<>();
+    private final ArrayList<Person> personen = new ArrayList<>();
     
     // Buttons:
     JButton addButton = new JButton("Hinzufügen");
@@ -33,7 +30,8 @@ public final class GUI_Person_manuell extends JFrame implements ActionListener {
     
     public GUI_Person_manuell() {
         this.add(this.mainPanel);
-        this.mainPanel.setLayout(this.layout);
+        GridBagLayout layout = new GridBagLayout();
+        this.mainPanel.setLayout(layout);
         
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1;
