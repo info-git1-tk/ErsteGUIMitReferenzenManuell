@@ -48,6 +48,23 @@ public final class GUI_Person_manuell extends JFrame implements ActionListener {
     }
     
     public void setupWindow() {
+
+
+
+                try {
+                    UIManager.setLookAndFeel(
+                            UIManager.getSystemLookAndFeelClassName());
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                } catch (InstantiationException e) {
+                    throw new RuntimeException(e);
+                } catch (IllegalAccessException e) {
+                    throw new RuntimeException(e);
+                } catch (UnsupportedLookAndFeelException e) {
+                    throw new RuntimeException(e);
+                }
+
+
         this.setPreferredSize(new Dimension(800,600));
         this.setMinimumSize(new Dimension(800,600));
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -69,7 +86,7 @@ public final class GUI_Person_manuell extends JFrame implements ActionListener {
         model.addColumn("Vorname");
         model.addColumn("Nachname");
         model.addColumn("Ist irgendwas?");
-
+        
         gbc.gridy = 0;
         gbc.weighty = 0;
         this.mainPanel.add(this.addButton,gbc);
