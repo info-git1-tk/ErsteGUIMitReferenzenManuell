@@ -10,8 +10,9 @@ import java.awt.GridBagConstraints;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,7 +22,7 @@ public final class GUI_Person_manuell extends JFrame implements ActionListener {
 
     private final GridBagConstraints gbc = new GridBagConstraints();
     private final JPanel mainPanel = new JPanel();
-    private final ArrayList<Person> personen = new ArrayList<>();
+    private final JTable personTable = new JTable();
     
     // Buttons:
     JButton addButton = new JButton("Hinzufügen");
@@ -41,14 +42,16 @@ public final class GUI_Person_manuell extends JFrame implements ActionListener {
         this.removeButton.addActionListener(e -> removePersonAction());
         
         this.setupWindow();
-        this.showWindow();
         this.initUI();
+        this.showWindow();
+
     }
     
     public void setupWindow() {
         this.setPreferredSize(new Dimension(800,600));
-        this.setMinimumSize(new Dimension(640,480));
+        this.setMinimumSize(new Dimension(800,600));
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
         this.pack();
     }
     
@@ -57,60 +60,70 @@ public final class GUI_Person_manuell extends JFrame implements ActionListener {
     }
     
     public void initUI() {
-        this.mainPanel.removeAll();
+
+        DefaultTableModel model = (DefaultTableModel) this.personTable.getModel();
+        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+        rightRenderer.setHorizontalAlignment(JLabel.RIGHT);
+
+        model.addColumn("ID");
+        model.addColumn("Vorname");
+        model.addColumn("Nachname");
+        model.addColumn("Ist irgendwas?");
+
         gbc.gridy = 0;
         gbc.weighty = 0;
         this.mainPanel.add(this.addButton,gbc);
         this.mainPanel.add(this.removeButton,gbc);
+        gbc.gridwidth = 2;
+        this.mainPanel.add(Box.createGlue(),gbc);
 
-        // Überschriften
-        gbc.gridy = 1;
+        gbc.gridy++;
         gbc.insets = new Insets(10,0,0,0);
-        this.mainPanel.add(new JLabel("Vorname"),gbc);
-        this.mainPanel.add(new JLabel("Nachname"),gbc);
-        this.mainPanel.add(new JLabel("Person-ID"),gbc);
-        this.mainPanel.add(new JLabel("ist etwas?"),gbc);
+        gbc.gridwidth = 4;
+        this.mainPanel.add(new JScrollPane(this.personTable),gbc);
 
-        gbc.insets = new Insets(0,0,0,0);
-
-        for(Person person : this.personen) {
-            gbc.gridy++;
-            this.mainPanel.add(new JTextField(person.getVorname()),gbc);
-            this.mainPanel.add(new JTextField(person.getName()),gbc);
-            this.mainPanel.add(new JTextField(String.valueOf(person.getId())),gbc);
-            
-            String irgendwasIst = "Es ist nichts!";            
-           
-            if(person.isIrgendwas()) {
-                irgendwasIst = "Es ist was.";
-            }            
-            this.mainPanel.add(new JTextField(irgendwasIst),gbc);
-        }
         gbc.gridy++;
         gbc.weighty = 1;
         this.mainPanel.add(Box.createGlue(),gbc);
-       
-        
-        this.mainPanel.updateUI();
     }
 
     
     public void addPersonAction() {
         System.out.println("Hinzufügen");
-        Person testPerson = new Person("Person","Vorname",24,true);
-        this.personen.add(testPerson);
-        this.initUI();
+
+
+        DefaultTableModel model = (DefaultTableModel) this.personTable.getModel();
+        Person person = new Person("Person","Vorname",24,true);
+
+        // TODO: TextFelder verwenden, um Attribute der Person festlegen zu können.
+
+        String irgendwasIst = "Es ist nichts!";
+        if(person.isIrgendwas()) {
+            irgendwasIst = "Es ist was.";
+        }
+
+        model.addRow(new Object[]{
+                person.getId(),
+                person.getVorname(),
+                person.getName(),
+                irgendwasIst
+        });
+
+        this.mainPanel.updateUI();
     }
     
     public void removePersonAction() {
         System.out.println("Entfernen");
+
+        DefaultTableModel model = (DefaultTableModel) this.personTable.getModel();
+
         try {
-            this.personen.remove(this.personen.size()-1);
+            model.removeRow(model.getRowCount()-1);
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Das Array ist bereits leer.");
         }
 
-        this.initUI();
+        this.mainPanel.updateUI();
     }
 
     @Override
