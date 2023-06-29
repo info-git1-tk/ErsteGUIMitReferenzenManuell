@@ -80,13 +80,16 @@ public final class GUI_Person_manuell extends JFrame implements ActionListener {
 
         DefaultTableModel model = (DefaultTableModel) this.personTable.getModel();
         DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
-        rightRenderer.setHorizontalAlignment(JLabel.RIGHT);
+        rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+
 
         model.addColumn("ID");
         model.addColumn("Vorname");
         model.addColumn("Nachname");
         model.addColumn("Ist irgendwas?");
-        
+
+        this.personTable.getColumnModel().getColumn(0).setCellRenderer(rightRenderer);
+
         gbc.gridy = 0;
         gbc.weighty = 0;
         this.mainPanel.add(this.addButton,gbc);
