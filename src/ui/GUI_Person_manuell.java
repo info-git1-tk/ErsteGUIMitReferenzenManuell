@@ -6,10 +6,13 @@
 package ui;
 
 import app.Person;
+import org.jdesktop.swingx.prompt.PromptSupport;
+
 import java.awt.GridBagConstraints;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Properties;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -23,12 +26,21 @@ public final class GUI_Person_manuell extends JFrame implements ActionListener {
     private final GridBagConstraints gbc = new GridBagConstraints();
     private final JPanel mainPanel = new JPanel();
     private final JTable personTable = new JTable();
+
+    private int pid = 1;
     
     // Buttons:
     JButton addButton = new JButton("Hinzufügen");
     JButton removeButton = new JButton("Entfernen");
-    
-    
+
+    // Input TextFields:
+    JTextField firstnameTextField = new JTextField();
+    JTextField lastnameTextField = new JTextField();
+    JCheckBox isSomethingCheckBox = new JCheckBox();
+
+    // Labels:
+    JTextField actionFeedbackLabel = new JTextField();
+
     public GUI_Person_manuell() {
         this.add(this.mainPanel);
         GridBagLayout layout = new GridBagLayout();
@@ -78,6 +90,10 @@ public final class GUI_Person_manuell extends JFrame implements ActionListener {
     
     public void initUI() {
 
+        PromptSupport.setPrompt("Vorname", this.firstnameTextField);
+        PromptSupport.setPrompt("Nachname", this.lastnameTextField);
+        this.isSomethingCheckBox.setText("Ist etwas?");
+
         DefaultTableModel model = (DefaultTableModel) this.personTable.getModel();
         DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
         rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -88,47 +104,73 @@ public final class GUI_Person_manuell extends JFrame implements ActionListener {
         model.addColumn("Nachname");
         model.addColumn("Ist irgendwas?");
 
-        this.personTable.getColumnModel().getColumn(0).setCellRenderer(rightRenderer);
+        //this.personTable.getColumnModel().getColumn(0).setCellRenderer(rightRenderer);
 
+        gbc.insets = new Insets(5,5,5,5);
         gbc.gridy = 0;
-        gbc.weighty = 0;
-        this.mainPanel.add(this.addButton,gbc);
-        this.mainPanel.add(this.removeButton,gbc);
-        gbc.gridwidth = 2;
+        gbc.gridwidth = 4;
+        this.mainPanel.add(this.actionFeedbackLabel,gbc);
+
+        gbc.gridwidth = 3;
+        gbc.gridy++;
         this.mainPanel.add(Box.createGlue(),gbc);
+        gbc.gridwidth = 1;
+        this.mainPanel.add(this.removeButton,gbc);
+
 
         gbc.gridy++;
-        gbc.insets = new Insets(10,0,0,0);
+        gbc.gridwidth = 1;
+        this.mainPanel.add(this.firstnameTextField,gbc);
+        this.mainPanel.add(this.lastnameTextField,gbc);
+        this.mainPanel.add(this.isSomethingCheckBox,gbc);
+        this.mainPanel.add(this.addButton,gbc);
+
+        gbc.gridy++;
+
         gbc.gridwidth = 4;
         this.mainPanel.add(new JScrollPane(this.personTable),gbc);
 
         gbc.gridy++;
         gbc.weighty = 1;
         this.mainPanel.add(Box.createGlue(),gbc);
+        this.updateRemoveButtonState();
+
+    }
+
+    public void updateRemoveButtonState() {
+        this.removeButton.setEnabled(this.personTable.getModel().getRowCount() != 0);
     }
 
     
     public void addPersonAction() {
         System.out.println("Hinzufügen");
 
-
         DefaultTableModel model = (DefaultTableModel) this.personTable.getModel();
-        Person person = new Person("Person","Vorname",24,true);
-
-        // TODO: TextFelder verwenden, um Attribute der Person festlegen zu können.
-
+        Person person;
         String irgendwasIst = "Es ist nichts!";
-        if(person.isIrgendwas()) {
-            irgendwasIst = "Es ist was.";
+
+        if (this.firstnameTextField.getText().length() > 0 && this.lastnameTextField.getText().length() > 0) {
+            person = new Person(this.lastnameTextField.getText(),this.firstnameTextField.getText(),this.pid,this.isSomethingCheckBox.isSelected());
+
+            if(person.isIrgendwas()) {
+                irgendwasIst = "Es ist was.";
+            }
+
+            model.addRow(new Object[]{
+                    person.getId(),
+                    person.getVorname(),
+                    person.getName(),
+                    irgendwasIst
+            });
+
+            this.pid++;
+            this.actionFeedbackLabel.setText(" ");
+
+        } else {
+            System.out.println("Eingaben waren nicht vollständig!");
+            this.actionFeedbackLabel.setText("Eingaben waren nicht vollständig!");
         }
-
-        model.addRow(new Object[]{
-                person.getId(),
-                person.getVorname(),
-                person.getName(),
-                irgendwasIst
-        });
-
+        this.updateRemoveButtonState();
         this.mainPanel.updateUI();
     }
     
@@ -141,8 +183,9 @@ public final class GUI_Person_manuell extends JFrame implements ActionListener {
             model.removeRow(model.getRowCount()-1);
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Das Array ist bereits leer.");
-        }
 
+        }
+        this.updateRemoveButtonState();
         this.mainPanel.updateUI();
     }
 

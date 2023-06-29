@@ -5,6 +5,8 @@
  */
 package ui;
 
+import javax.swing.*;
+
 /**
  *
  * @author r115
@@ -13,6 +15,7 @@ public class GUI_Haupt extends javax.swing.JFrame {
     
     //Referenzattribut für den Zugriff auf das Fenster-objekt guiPerson
     private GUI_Person guiPerson;
+    private GUI_Person_manuell gui_person_manuell;
 
     /**
      * Creates new form GUI_Haupt
@@ -26,18 +29,19 @@ public class GUI_Haupt extends javax.swing.JFrame {
     public void refGuiPerson(GUI_Person guiPerson){
         this.guiPerson = guiPerson;
     }
-    
+    public void refGuiPersonManuell(GUI_Person_manuell guiPerson){
+        this.gui_person_manuell = guiPerson;
+    }
+
     // Zugriffsmethode für das Referenzattribut:  get- Methode
 
     public GUI_Person getGuiPerson() {
         return guiPerson;
     }
-    
-    
-    
-    
-    
-    
+
+    public GUI_Person_manuell getGui_person_manuell() {
+        return gui_person_manuell;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -52,6 +56,7 @@ public class GUI_Haupt extends javax.swing.JFrame {
         jB_Start = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
 
         jLueberschrift.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLueberschrift.setText("Willkommen in TK 2.0");
@@ -92,6 +97,8 @@ public class GUI_Haupt extends javax.swing.JFrame {
 
     private void jB_StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_StartActionPerformed
         // TODO add your handling code here:
+        SwingUtilities.invokeLater(GUI_Person_manuell::new);
+        this.setVisible(false);
     }//GEN-LAST:event_jB_StartActionPerformed
 
     /**
