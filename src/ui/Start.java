@@ -20,7 +20,8 @@ public class Start {
 
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                System.out.printf("Look %s%n",info.getName());
+                if ("Metal".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -35,22 +36,7 @@ public class Start {
             java.util.logging.Logger.getLogger(GUI_Haupt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
-        // Erzeugen eines Fenster-objektes (Hauptfenster)
-        GUI_Haupt guiHaupt =  new GUI_Haupt();
-        // Hauptfenster auf sichtbar setzen
-        guiHaupt.setVisible(true);
-        
-         // Erzeugen eines weiteren Fenster-objektes, welches 
-         // noch nicht sichtbar ist
-        GUI_Person guiPerson = new GUI_Person();
-        
-        // Erstellen der Verknüpfungen zwischen den Fenstern:
-        // Mit Hilfe der Zuweisungsmethoden werden den jeweiligen
-        // Referenzattributen jeweils ein Zeiger auf das andere Fenster-Objekt
-        // zugewiesen
-        
-        guiHaupt.refGuiPerson(guiPerson);
-        guiPerson.refGuiHaupt(guiHaupt);
+        SwingUtilities.invokeLater(GUI_Haupt::new);
 
     }
     

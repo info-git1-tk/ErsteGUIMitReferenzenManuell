@@ -61,22 +61,6 @@ public final class GUI_Person_manuell extends JFrame implements ActionListener {
     
     public void setupWindow() {
 
-
-
-                try {
-                    UIManager.setLookAndFeel(
-                            UIManager.getSystemLookAndFeelClassName());
-                } catch (ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                } catch (InstantiationException e) {
-                    throw new RuntimeException(e);
-                } catch (IllegalAccessException e) {
-                    throw new RuntimeException(e);
-                } catch (UnsupportedLookAndFeelException e) {
-                    throw new RuntimeException(e);
-                }
-
-
         this.setPreferredSize(new Dimension(800,600));
         this.setMinimumSize(new Dimension(800,600));
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -93,6 +77,7 @@ public final class GUI_Person_manuell extends JFrame implements ActionListener {
         PromptSupport.setPrompt("Vorname", this.firstnameTextField);
         PromptSupport.setPrompt("Nachname", this.lastnameTextField);
         this.isSomethingCheckBox.setText("Ist etwas?");
+        this.actionFeedbackLabel.setForeground(Color.RED);
 
         DefaultTableModel model = (DefaultTableModel) this.personTable.getModel();
         DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
