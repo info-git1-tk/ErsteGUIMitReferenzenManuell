@@ -57,7 +57,7 @@ public class GUI_Haupt extends javax.swing.JFrame {
         jB_Start = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+
 
         jLueberschrift.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLueberschrift.setText("Willkommen in TK 2.0");
@@ -94,6 +94,7 @@ public class GUI_Haupt extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jB_StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB_StartActionPerformed
