@@ -10,7 +10,6 @@ import com.formdev.flatlaf.FlatLightLaf;
 import javax.swing.*;
 
 /**
- *
  * @author r115
  */
 public class Start {
@@ -23,14 +22,14 @@ public class Start {
         FlatLightLaf.setup();
 
         try {
-            UIManager.setLookAndFeel( new FlatLightLaf() );
-        } catch (Exception ignored)
-        {
-
+            UIManager.setLookAndFeel(new FlatLightLaf());
+        } catch (Exception ignored) {
         }
 
-        SwingUtilities.invokeLater(GUI_Haupt::new);
+        GUI_Haupt app = new GUI_Haupt();
+
+        app.refGuiPersonManuell(new GUI_Person_manuell(app));
 
     }
-    
+
 }

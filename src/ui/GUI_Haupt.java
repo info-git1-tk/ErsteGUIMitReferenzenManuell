@@ -21,7 +21,7 @@ public class GUI_Haupt extends javax.swing.JFrame {
      * Creates new form GUI_Haupt
      */
     public GUI_Haupt() {
-        initComponents();
+        SwingUtilities.invokeLater(this::initComponents);
         this.setVisible(true);
     }
     
@@ -93,8 +93,7 @@ public class GUI_Haupt extends javax.swing.JFrame {
 
     private void jB_StartActionPerformed(java.awt.event.ActionEvent evt) {
 
-        SwingUtilities.invokeLater(GUI_Person_manuell::new);
-        this.setVisible(false);
+        this.gui_person_manuell.showWindow();
     }
     private javax.swing.JButton jB_Start;
     private javax.swing.JLabel jLueberschrift;

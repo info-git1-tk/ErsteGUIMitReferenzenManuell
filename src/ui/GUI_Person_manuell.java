@@ -12,6 +12,8 @@ import java.awt.GridBagConstraints;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -21,6 +23,8 @@ import javax.swing.table.DefaultTableModel;
  * @author wagnerbe
  */
 public final class GUI_Person_manuell extends JFrame implements ActionListener {
+
+    private JFrame parentFrame;
 
     private final GridBagConstraints gbc = new GridBagConstraints();
     private final JPanel mainPanel = new JPanel();
@@ -40,7 +44,8 @@ public final class GUI_Person_manuell extends JFrame implements ActionListener {
     // Labels:
     JTextField actionFeedbackLabel = new JTextField();
 
-    public GUI_Person_manuell() {
+    public GUI_Person_manuell(JFrame parentFrame) {
+        this.parentFrame = parentFrame;
         this.add(this.mainPanel);
         GridBagLayout layout = new GridBagLayout();
         this.mainPanel.setLayout(layout);
@@ -54,7 +59,6 @@ public final class GUI_Person_manuell extends JFrame implements ActionListener {
         
         this.setupWindow();
         this.initUI();
-        this.showWindow();
 
     }
     
@@ -62,9 +66,52 @@ public final class GUI_Person_manuell extends JFrame implements ActionListener {
 
         this.setPreferredSize(new Dimension(800,600));
         this.setMinimumSize(new Dimension(800,600));
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+        setLocation();
         this.pack();
+
+        this.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                dispose();
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+
+            }
+        });
+    }
+
+    public void setLocation () {
+
+        //this.setLocation(parentFrame.getLocation());
+        this.setLocationRelativeTo(parentFrame);
     }
     
     public void showWindow() {
