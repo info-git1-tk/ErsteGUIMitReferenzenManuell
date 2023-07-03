@@ -6,7 +6,7 @@
 package ui;
 
 import app.Person;
-import org.jdesktop.swingx.prompt.PromptSupport;
+import com.formdev.flatlaf.FlatClientProperties;
 
 import java.awt.GridBagConstraints;
 import java.awt.*;
@@ -73,8 +73,8 @@ public final class GUI_Person_manuell extends JFrame implements ActionListener {
     
     public void initUI() {
 
-        PromptSupport.setPrompt("Vorname", this.firstnameTextField);
-        PromptSupport.setPrompt("Nachname", this.lastnameTextField);
+        this.firstnameTextField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Vorname" );
+        this.lastnameTextField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nachname" );
         this.isSomethingCheckBox.setText("Ist etwas?");
         this.actionFeedbackLabel.setForeground(Color.RED);
 

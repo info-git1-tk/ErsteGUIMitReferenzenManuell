@@ -5,7 +5,9 @@
  */
 package ui;
 
-import javax.swing.SwingUtilities;
+import com.formdev.flatlaf.FlatLightLaf;
+
+import javax.swing.*;
 
 /**
  *
@@ -18,22 +20,13 @@ public class Start {
      */
     public static void main(String[] args) {
 
+        FlatLightLaf.setup();
+
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                System.out.printf("Look %s%n",info.getName());
-                if ("Metal".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUI_Haupt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUI_Haupt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUI_Haupt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUI_Haupt.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            UIManager.setLookAndFeel( new FlatLightLaf() );
+        } catch (Exception ignored)
+        {
+
         }
 
         SwingUtilities.invokeLater(GUI_Haupt::new);
